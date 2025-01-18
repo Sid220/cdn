@@ -1,0 +1,26 @@
+services:
+  slamdunk:
+    build: .
+    image: "registry.sidtrz.com:5000/slamdunk:dev"
+    # TODO: This could be handled better by forwarding a folder we create in /dev as a volume and running a UDEV rule to add cameras to this folder.
+    # Run as privileged to access the USB cameras
+    privileged: true
+    network_mode: host
+    ports:
+      - "5801:5801"
+      - "5802:5802"
+      - "5805:5805"
+      - "5806:5806"
+    volumes:
+      - ./slamdunk.docker.json:/home/jetson/slamdunk.json
+      - /dev/slamdunk_cameras:/dev/slamdunk_cameras
+    environment:
+      SLAMDUNK_HOST: $HOSTNAME
+    restart: always
+  visualisation:
+    image: "registry.sidtrz.com:5000/lichtblick:latest"
+    ports:
+      - "5803:8080"
+    volumes:
+      - ./extern/foxglove/Default.json:/lichtblick/default-layout.json
+    restart: always
