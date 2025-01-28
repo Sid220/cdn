@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="video4linux", KERNEL=="video[0-9]*", RUN+="/usr/share/slamdunk/docker_vid.sh 'add' '%E{DEVNAME}' '%M' '%m'"
+ACTION=="remove", SUBSYSTEM=="video4linux", KERNEL=="video[0-9]*", RUN+="/usr/share/slamdunk/docker_vid.sh 'remove' '%E{DEVNAME}' '%M' '%m'"
